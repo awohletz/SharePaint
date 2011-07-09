@@ -56,5 +56,6 @@ public class CanvasView extends JPanel implements CanvasListener
 	public void imageUpdated(BufferedImage img)
 	{
 		backbuffer = img;
+		repaint();
 	}
 }

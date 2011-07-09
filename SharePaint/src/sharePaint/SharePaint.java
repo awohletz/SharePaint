@@ -41,6 +41,7 @@ public class SharePaint extends JApplet
 		this.setBackground(Color.white);
 		
 		canvasPanel.init(ctrl, model);
+		ctrl.clear();
 	}
 
 }

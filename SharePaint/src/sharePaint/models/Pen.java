@@ -11,11 +11,11 @@ public class Pen
 	private Color paintColor;
 	private Canvas canvas;
 	
-	public Pen(Canvas model, int size, Color color)
+	public Pen(Canvas canvas, int size, Color color)
 	{
 		this.brushSize = size;
 		this.paintColor = color;
-		this.canvas = model;
+		this.canvas = canvas;
 	}
 
 	public void drawLine(int x1, int y1, int x2, int y2)

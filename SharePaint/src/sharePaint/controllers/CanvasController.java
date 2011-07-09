@@ -46,10 +46,6 @@ public class CanvasController implements MouseMotionListener, MouseListener
 	@Override
 	public void mouseClicked(MouseEvent e)
 	{
-		int x = e.getX();
-		int y = e.getY();
-		
-		pen.drawPoint(x, y);
 	}
 
 	@Override
@@ -72,7 +68,8 @@ public class CanvasController implements MouseMotionListener, MouseListener
 		int x = e.getX();
 		int y = e.getY();
 
-
+		pen.drawPoint(x, y);
+		
 		prevX = x;
 		prevY = y;
 	}

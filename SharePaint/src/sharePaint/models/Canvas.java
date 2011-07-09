@@ -19,8 +19,6 @@ public class Canvas
 	{
 		backbuffer = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
 		backG = (Graphics2D) backbuffer.getGraphics();
-		backG.setColor(Color.WHITE);
-		backG.fillRect(0, 0, width, height);
 		
 		this.width = width;
 		this.height = height;
