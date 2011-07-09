@@ -1,4 +1,4 @@
-package SharePaint;
+package sharePaint.views;
 
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
@@ -10,31 +10,28 @@ import javax.swing.JColorChooser;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import sharePaint.controllers.CanvasController;
+
 public class ColorChooser extends JFrame
 {
 	private JColorChooser cc = new JColorChooser();
 	private final ColorChooser CC = this;
-	private CanvasPanel cvp;
-	
-	public ColorChooser(CanvasPanel cp)
+	private CanvasController ctrl;
+
+	public ColorChooser(CanvasController ctrl)
 	{
 		add(cc, BorderLayout.CENTER);
-		
-		this.cvp = cp;
-		
+		this.ctrl = ctrl;
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-		
 		add(buildButtonPanel(), BorderLayout.SOUTH);
-		
 		setSize(500, 300);
-		
 		setVisible(true);
 	}
-	
+
 	public JPanel buildButtonPanel()
 	{
 		JPanel panel = new JPanel(new GridLayout(1, 2));
-		
+
 		JButton okay = new JButton("OK");
 		panel.add(okay);
 		okay.addActionListener(new ActionListener()
@@ -42,13 +39,13 @@ public class ColorChooser extends JFrame
 			@Override
 			public void actionPerformed(ActionEvent arg0)
 			{
-				cvp.setColor(cc.getColor());
+				ctrl.setPenColor(cc.getColor());
 				CC.dispose();
 			}
 		});
-		
+
 		JButton cancel = new JButton("Cancel");
-		panel.add(cancel);	
+		panel.add(cancel);
 		cancel.addActionListener(new ActionListener()
 		{
 			@Override

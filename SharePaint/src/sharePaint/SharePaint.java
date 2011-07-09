@@ -1,10 +1,16 @@
-package SharePaint;
+package sharePaint;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 
 import javax.swing.JApplet;
+
+import sharePaint.controllers.CanvasController;
+import sharePaint.models.Canvas;
+import sharePaint.views.CanvasView;
+import sharePaint.views.LeftToolbar;
+import sharePaint.views.TopToolBar;
 
 public class SharePaint extends JApplet
 {
@@ -17,9 +23,11 @@ public class SharePaint extends JApplet
 
 	public void init()
 	{
+		Canvas model = new Canvas(WIDTH, HEIGHT);
+		CanvasController ctrl = new CanvasController(model);
 		
-		CanvasPanel canvasPanel = new CanvasPanel(WIDTH, HEIGHT);
-		LeftToolbar lt = new LeftToolbar(canvasPanel);
+		CanvasView canvasPanel = new CanvasView(WIDTH, HEIGHT);
+		LeftToolbar lt = new LeftToolbar(ctrl);
 		TopToolBar ttb = new TopToolBar();
 		
 		this.setLayout(new BorderLayout());
@@ -32,7 +40,7 @@ public class SharePaint extends JApplet
 		this.setSize(new Dimension(640, 480));
 		this.setBackground(Color.white);
 		
-		canvasPanel.init();
+		canvasPanel.init(ctrl, model);
 	}
 
 }

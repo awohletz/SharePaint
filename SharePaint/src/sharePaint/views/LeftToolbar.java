@@ -1,4 +1,4 @@
-package SharePaint;
+package sharePaint.views;
 
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -10,6 +10,9 @@ import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import sharePaint.controllers.CanvasController;
+
+
 public class LeftToolbar extends JPanel
 {
 	private JComboBox sizeChooser;
@@ -19,7 +22,7 @@ public class LeftToolbar extends JPanel
 	/**
 	 * @param cv
 	 */
-	public LeftToolbar(final CanvasPanel cv)
+	public LeftToolbar(final CanvasController ctrl)
 	{
 		this.setLayout(new GridLayout(20, 1));
 		this.setSize(60, 480);
@@ -59,7 +62,7 @@ public class LeftToolbar extends JPanel
 			@Override
 			public void actionPerformed(ActionEvent e)
 			{
-				cv.clearAndRepaint();
+				ctrl.clear();
 			}
 		});
 		this.add(clearButton);
@@ -73,7 +76,7 @@ public class LeftToolbar extends JPanel
 			public void actionPerformed(ActionEvent e)
 			{
 				Integer size = (Integer)sizeChooser.getSelectedItem();
-				cv.setBrushSize((int)size);
+				ctrl.setPenSize((int)size);
 			}
 		});
 		this.add(sizeChooser);
@@ -85,7 +88,7 @@ public class LeftToolbar extends JPanel
 			@Override
 			public void actionPerformed(ActionEvent ae)
 			{
-				ColorChooser cc = new ColorChooser(cv);
+				ColorChooser cc = new ColorChooser(ctrl);
 			}
 		});
 		this.add(changeColors);
@@ -109,7 +112,7 @@ public class LeftToolbar extends JPanel
 			@Override
 			public void actionPerformed(ActionEvent e)
 			{
-				cv.drawRectangle();
+//				cv.drawRectangle();
 			}
 		});
 		
