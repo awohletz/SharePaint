@@ -76,7 +76,7 @@ public class LeftToolbar extends JPanel
 			public void actionPerformed(ActionEvent e)
 			{
 				Integer size = (Integer)sizeChooser.getSelectedItem();
-				ctrl.setPenSize((int)size);
+				ctrl.setPenSize(size);
 			}
 		});
 		this.add(sizeChooser);

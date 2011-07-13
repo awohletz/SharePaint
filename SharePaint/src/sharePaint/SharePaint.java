@@ -21,6 +21,7 @@ public class SharePaint extends JApplet
 	{
 	}
 
+	@Override
 	public void init()
 	{
 		Canvas model = new Canvas(WIDTH, HEIGHT);
@@ -42,6 +43,9 @@ public class SharePaint extends JApplet
 		
 		canvasPanel.init(ctrl, model);
 		ctrl.clear();
+		
+		//connect to server
+		
 	}
 
 }
