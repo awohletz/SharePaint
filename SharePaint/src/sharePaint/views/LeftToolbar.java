@@ -3,13 +3,17 @@ package sharePaint.views;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JColorChooser;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import sharePaint.actions.RectangleAction;
 import sharePaint.controllers.CanvasController;
 
 
@@ -37,19 +41,6 @@ public class LeftToolbar extends JPanel
 		brushSizes[5] = 12;
 		brushSizes[6] = 14;
 		
-		String[] colors = new String[13]; //only colors already defined in Java are currently available.
-										 //There are thirteen such colors, but right now only 11 have been added to the list.
-		colors[0] = "Black";
-		colors[1] = "Dark Gray";
-		colors[2] = "Gray";
-		colors[3] = "Light Gray";
-		colors[4] = "White";
-		colors[5] = "Red";
-		colors[6] = "Orange";
-		colors[7] = "Yellow";
-		colors[8] = "Green";
-		colors[9] = "Blue";
-		colors[10] = "Magenta";
 		
 		String[] shapes = new String[2];
 		shapes[0] = "Square";
@@ -67,6 +58,7 @@ public class LeftToolbar extends JPanel
 		});
 		this.add(clearButton);
 		
+		//BRUSH SIZE CHOOSER
 		sizeChooser = new JComboBox(brushSizes);
 		sizeChooser.setSelectedItem(brushSizes[4]); //default value is 10 x 10
 		sizeChooser.addActionListener(new ActionListener()
@@ -76,7 +68,8 @@ public class LeftToolbar extends JPanel
 			public void actionPerformed(ActionEvent e)
 			{
 				Integer size = (Integer)sizeChooser.getSelectedItem();
-				ctrl.setPenSize(size);
+				ctrl.setPenSize((int)size);
+				ctrl.setShapeToolSize((int)size);
 			}
 		});
 		this.add(sizeChooser);
@@ -106,17 +99,42 @@ public class LeftToolbar extends JPanel
 		this.add(shapeChooser);
 		
 		JLabel tools = new JLabel("Tools");
-		JButton drawRectangle = new JButton("Rectangle");
-		drawRectangle.addActionListener(new ActionListener()
+		
+		JCheckBox drawRectangle = new JCheckBox("Draw Rectangle");
+		drawRectangle.addItemListener(new ItemListener()
 		{
 			@Override
-			public void actionPerformed(ActionEvent e)
+			public void itemStateChanged(ItemEvent e)
 			{
-//				cv.drawRectangle();
+				if (e.getStateChange() == ItemEvent.SELECTED)
+				{
+					ctrl.setDrawType("rect");
+				}
+				else
+				{
+					ctrl.setDrawType("draw");
+				}
 			}
 		});
 		
-		JButton drawOval = new JButton("Oval");
+		JCheckBox drawOval = new JCheckBox("Draw Oval");
+		drawOval.addItemListener(new ItemListener()
+		{
+			
+			@Override
+			public void itemStateChanged(ItemEvent e)
+			{
+				if(e.getStateChange() == ItemEvent.SELECTED)
+				{
+					ctrl.setDrawType("oval");
+				}
+				else 
+				{
+					ctrl.setDrawType("draw");
+				}
+				
+			}
+		});
 		
 		this.add(tools);
 		this.add(drawRectangle);

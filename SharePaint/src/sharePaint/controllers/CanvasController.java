@@ -8,12 +8,17 @@ import java.awt.event.MouseMotionListener;
 import sharePaint.actions.ClearAction;
 import sharePaint.models.Canvas;
 import sharePaint.models.Pen;
+import sharePaint.models.ShapeTool;
 
 public class CanvasController implements MouseMotionListener, MouseListener
 {
 	private int prevX, prevY;
 	private Canvas canvas;
 	private Pen pen;
+	private ShapeTool shapeTool;
+	private boolean rectMode = false;
+	private boolean ovalMode = false;
+	private boolean drawMode = true;
 	private final int DEFAULT_PEN_SIZE = 10;
 	private final Color DEFAULT_PEN_COLOR = Color.black;
 	private final Color DEFAULT_BACKGROUND_COLOR = Color.white;
@@ -22,6 +27,7 @@ public class CanvasController implements MouseMotionListener, MouseListener
 	{
 		canvas = cm;
 		pen = new Pen(cm, DEFAULT_PEN_SIZE, DEFAULT_PEN_COLOR);
+		shapeTool = new ShapeTool(cm, pen.getColor(), DEFAULT_PEN_SIZE);
 	}
 
 	@Override
@@ -34,18 +40,58 @@ public class CanvasController implements MouseMotionListener, MouseListener
 	{
 		int x = e.getX();
 		int y = e.getY();
+		
 
-		pen.drawLine(prevX, prevY, x, y);
+		if (drawMode)
+		{
+			pen.drawLine(prevX, prevY, x, y);
+			prevX = x;
+			prevY = y;
+		}
+		else if (rectMode)
+		{
+			shapeTool.eraseFormerRectangle();
+			//RIGHT HALF
+			//Quadrant 4
+			if (x > prevX && y > prevY)
+			{
+				shapeTool.setFormerRectCharacteristics(prevX, prevY, (x-prevX), (y-prevY));
+				shapeTool.drawRect(prevX, prevY, (x-prevX), (y-prevY));
+			}
+			//Quadrant 1
+			else if (x > prevX && y < prevY)
+			{
+				shapeTool.setFormerRectCharacteristics(prevX, y, (x-prevX), (prevY - y));
+				shapeTool.drawRect(prevX, y, (x-prevX), (prevY - y));
+			}
+			//LEFT HALF
+			//Quadrant 3
+			else if (x  < prevX && y > prevY)
+			{
+				shapeTool.setFormerRectCharacteristics(x, prevY, (prevX - x), (y - prevY));
+				shapeTool.drawRect(x, prevY, (prevX - x), (y - prevY));
+			}
+			//Quadrant 2
+			else if (x < prevX && y < prevY)
+			{
+				shapeTool.setFormerRectCharacteristics(x, y, (prevX-x), (prevY - y));
+				shapeTool.drawRect(x, y, (prevX-x), (prevY - y));
+			}
+			
+		}
+		else if (ovalMode)
+		{
+			
+		}
 		
 		e.consume();
-		prevX = x;
-		prevY = y;
 
 	}
 
 	@Override
 	public void mouseClicked(MouseEvent e)
 	{
+		
 	}
 
 	@Override
@@ -67,8 +113,10 @@ public class CanvasController implements MouseMotionListener, MouseListener
 	{
 		int x = e.getX();
 		int y = e.getY();
+		
 
 		pen.drawPoint(x, y);
+
 		
 		prevX = x;
 		prevY = y;
@@ -88,6 +136,31 @@ public class CanvasController implements MouseMotionListener, MouseListener
 	public void setPenSize(int size)
 	{
 		pen = new Pen(canvas, size, pen.getColor());
+	}
+	
+	public void setShapeToolSize(int size)
+	{
+		shapeTool.setPenSize(size);
+	}
+	
+	public void setDrawType(String type)
+	{
+		if (type.equals("rect"))
+		{
+			shapeTool.setColor(pen.getColor());
+			rectMode = true;
+			drawMode = false;
+		}
+		else if (type.equals("oval"))
+		{
+			shapeTool.setColor(pen.getColor());
+			ovalMode = true;
+			drawMode = false;
+		}
+		else
+		{
+			drawMode = true;
+		}
 	}
 
 	public void clear()
