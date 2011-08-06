@@ -3,9 +3,10 @@ package sharePaint.actions;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.io.Serializable;
 
 
-public class LineAction implements CanvasAction
+public class LineAction implements CanvasAction, Serializable
 {
 
 	private Color paintColor;

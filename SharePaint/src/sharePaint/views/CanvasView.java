@@ -7,9 +7,9 @@ import java.awt.image.BufferedImage;
 
 import javax.swing.JPanel;
 
-import sharePaint.CanvasImageListener;
 import sharePaint.controllers.CanvasController;
 import sharePaint.models.Canvas;
+import sharePaint.models.CanvasImageListener;
 
 public class CanvasView extends JPanel implements CanvasImageListener
 {

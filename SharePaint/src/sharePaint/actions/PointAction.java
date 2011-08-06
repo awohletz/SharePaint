@@ -2,9 +2,10 @@ package sharePaint.actions;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.io.Serializable;
 
 
-public class PointAction implements CanvasAction
+public class PointAction implements CanvasAction, Serializable
 {
 	private Color color;
 	private int size;

@@ -165,7 +165,7 @@ public class CanvasController implements MouseMotionListener, MouseListener
 
 	public void clear()
 	{
-		canvas.draw(new ClearAction(DEFAULT_BACKGROUND_COLOR, canvas.getWidth(), canvas.getHeight()));
+		canvas.draw(new ClearAction(DEFAULT_BACKGROUND_COLOR, canvas.getWidth(), canvas.getHeight()), true);
 	}
 	
 }

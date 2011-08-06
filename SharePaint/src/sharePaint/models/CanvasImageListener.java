@@ -1,4 +1,4 @@
-package sharePaint;
+package sharePaint.models;
 
 import java.awt.image.BufferedImage;
 
