@@ -7,11 +7,11 @@ import java.awt.image.BufferedImage;
 
 import javax.swing.JPanel;
 
-import sharePaint.CanvasListener;
 import sharePaint.controllers.CanvasController;
 import sharePaint.models.Canvas;
+import sharePaint.models.CanvasImageListener;
 
-public class CanvasView extends JPanel implements CanvasListener
+public class CanvasView extends JPanel implements CanvasImageListener
 {
 	private BufferedImage overlay;
 	private BufferedImage backbuffer;
@@ -36,11 +36,13 @@ public class CanvasView extends JPanel implements CanvasListener
 		addMouseListener(ctrl);
 	}
 
+	@Override
 	public void update(Graphics g)
 	{
 		g.drawImage(backbuffer, 0, 0, this);
 	}
 
+	@Override
 	public void paintComponent(Graphics g)
 	{
 		update(g);

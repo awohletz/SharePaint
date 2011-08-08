@@ -52,6 +52,13 @@ public class CanvasController implements MouseMotionListener, MouseListener
 		}
 		else if (rectMode)
 		{	
+			pen.drawLine(prevX, prevY, x, y);
+			prevX = x;
+			prevY = y;
+		}
+		else if (rectMode)
+		{
+			shapeTool.eraseFormerRectangle();
 			//RIGHT HALF
 			//Quadrant 4
 			if (x > prevX && y > prevY)
@@ -171,7 +178,7 @@ public class CanvasController implements MouseMotionListener, MouseListener
 
 	public void clear()
 	{
-		canvas.draw(new ClearAction(DEFAULT_BACKGROUND_COLOR, canvas.getWidth(), canvas.getHeight()));
+		canvas.draw(new ClearAction(DEFAULT_BACKGROUND_COLOR, canvas.getWidth(), canvas.getHeight()), true);
 	}
 	
 }

@@ -1,8 +1,8 @@
-package sharePaint;
+package sharePaint.models;
 
 import java.awt.image.BufferedImage;
 
-public interface CanvasListener
+public interface CanvasImageListener
 {
 	public void imageUpdated(BufferedImage img);
 }

@@ -3,8 +3,9 @@ package sharePaint.actions;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.io.Serializable;
 
-public class RectangleAction implements CanvasAction
+public class RectangleAction implements CanvasAction, Serializable
 {
 	private Color color;
 	private int x, y, width, height, brushSize;

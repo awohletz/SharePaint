@@ -2,8 +2,9 @@ package sharePaint.actions;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.io.Serializable;
 
-public class ClearAction implements CanvasAction
+public class ClearAction implements CanvasAction, Serializable
 {
 
 	private Color bgColor;

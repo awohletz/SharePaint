@@ -8,10 +8,12 @@ import java.awt.event.ItemListener;
 
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
+import javax.swing.JColorChooser;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import sharePaint.actions.RectangleAction;
 import sharePaint.controllers.CanvasController;
 
 public class LeftToolbar extends JPanel
@@ -57,6 +59,9 @@ public class LeftToolbar extends JPanel
 		this.add(clearButton);
 
 		// BRUSH SIZE CHOOSER
+		
+		//BRUSH SIZE CHOOSER
+
 		sizeChooser = new JComboBox(brushSizes);
 		sizeChooser.setSelectedItem(brushSizes[4]); // default value is 10 x 10
 		sizeChooser.addActionListener(new ActionListener()
@@ -101,10 +106,12 @@ public class LeftToolbar extends JPanel
 		this.add(shapeChooser);
 
 		JLabel tools = new JLabel("Tools");
-		
+
+		drawRectangle = new JCheckBox("Draw Rectangle");
+
 		RectangleItemListener ril = new RectangleItemListener();
 		OvalItemListener oil = new OvalItemListener();
-		
+
 		drawRectangle = new JCheckBox("Draw Rectangle");
 		drawRectangle.addItemListener(ril);
 

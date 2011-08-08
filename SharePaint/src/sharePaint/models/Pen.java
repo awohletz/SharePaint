@@ -21,12 +21,12 @@ public class Pen
 
 	public void drawLine(int x1, int y1, int x2, int y2)
 	{
-		canvas.draw(new LineAction(paintColor, brushSize, x1, y1, x2, y2, circle));
+		canvas.draw(new LineAction(paintColor, brushSize, x1, y1, x2, y2, circle), true);
 	}
 	
 	public void drawPoint(int x, int y)
 	{
-		canvas.draw(new PointAction(paintColor, brushSize, x, y, circle));
+		canvas.draw(new PointAction(paintColor, brushSize, x, y, circle), true);
 	}
 
 	public Color getColor()
