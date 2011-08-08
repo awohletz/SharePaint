@@ -19,6 +19,7 @@ public class CanvasController implements MouseMotionListener, MouseListener
 	private boolean rectMode = false;
 	private boolean ovalMode = false;
 	private boolean drawMode = true;
+	private boolean circle = true; 
 	private final int DEFAULT_PEN_SIZE = 10;
 	private final Color DEFAULT_PEN_COLOR = Color.black;
 	private final Color DEFAULT_BACKGROUND_COLOR = Color.white;
@@ -44,13 +45,13 @@ public class CanvasController implements MouseMotionListener, MouseListener
 
 		if (drawMode)
 		{
+			pen.setDrawType(circle);
 			pen.drawLine(prevX, prevY, x, y);
 			prevX = x;
 			prevY = y;
 		}
 		else if (rectMode)
-		{
-			shapeTool.eraseFormerRectangle();
+		{	
 			//RIGHT HALF
 			//Quadrant 4
 			if (x > prevX && y > prevY)
@@ -114,7 +115,7 @@ public class CanvasController implements MouseMotionListener, MouseListener
 		int x = e.getX();
 		int y = e.getY();
 		
-
+		pen.setDrawType(circle);
 		pen.drawPoint(x, y);
 
 		
@@ -143,7 +144,7 @@ public class CanvasController implements MouseMotionListener, MouseListener
 		shapeTool.setPenSize(size);
 	}
 	
-	public void setDrawType(String type)
+	public void setDrawType(String type) //set either rectangle or oval draw. Not to be confused with point draw type. 
 	{
 		if (type.equals("rect"))
 		{
@@ -161,6 +162,11 @@ public class CanvasController implements MouseMotionListener, MouseListener
 		{
 			drawMode = true;
 		}
+	}
+	
+	public void setPointType(boolean circle)
+	{
+		this.circle = circle;
 	}
 
 	public void clear()
