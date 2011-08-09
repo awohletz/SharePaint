@@ -26,12 +26,12 @@ public class ShapeTool
 	public void drawRect(int x, int y, int width, int height)
 	{
 		
-		canvas.draw(new RectangleAction(color, brushSize, x, y, width, height), true);
+		canvas.draw(new RectangleAction(color, brushSize, x, y, width, height));
 	}
 	
 	public void eraseFormerRectangle()
 	{
-		canvas.draw(new RectangleAction(Color.WHITE, brushSize, formerX, formerY, formerWidth, formerHeight), true);
+		canvas.draw(new RectangleAction(Color.WHITE, brushSize, formerX, formerY, formerWidth, formerHeight));
 	}
 	
 	public void setFormerRectCharacteristics(int formerX, int formerY, int formerWidth, int formerHeight)
