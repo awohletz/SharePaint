@@ -24,8 +24,7 @@ public class Canvas implements ConnectionListener
 		assert width > 0;
 		assert height > 0;
 
-		backbuffer = new BufferedImage(width, height,
-				BufferedImage.TYPE_INT_ARGB);
+		backbuffer = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
 		backG = (Graphics2D) backbuffer.getGraphics();
 
 		this.width = width;
