@@ -28,15 +28,15 @@ public abstract class SharePaint extends JApplet
 		CanvasController ctrl = new CanvasController(canvas);
 
 		CanvasView canvasPanel = new CanvasView(WIDTH, HEIGHT);
-		LeftToolbar lt = new LeftToolbar(ctrl);
-		TopToolBar ttb = new TopToolBar();
+		LeftToolbar lt = new LeftToolbar(ctrl, canvas);
+		//TopToolBar ttb = new TopToolBar();
 
 		this.setLayout(new BorderLayout());
 
 		this.add(canvasPanel, BorderLayout.CENTER);
 		this.add(lt, BorderLayout.WEST);
 
-		this.add(ttb, BorderLayout.NORTH);
+		//this.add(ttb, BorderLayout.NORTH);
 
 		this.setSize(new Dimension(640, 480));
 		this.setBackground(Color.white);

@@ -51,45 +51,55 @@ public class CanvasController implements MouseMotionListener, MouseListener
 			prevY = y;
 		}
 		else if (rectMode)
-		{	
-			pen.drawLine(prevX, prevY, x, y);
-			prevX = x;
-			prevY = y;
-		}
-		else if (rectMode)
 		{
-			shapeTool.eraseFormerRectangle();
 			//RIGHT HALF
 			//Quadrant 4
 			if (x > prevX && y > prevY)
 			{
-				shapeTool.setFormerRectCharacteristics(prevX, prevY, (x-prevX), (y-prevY));
 				shapeTool.drawRect(prevX, prevY, (x-prevX), (y-prevY));
 			}
 			//Quadrant 1
 			else if (x > prevX && y < prevY)
 			{
-				shapeTool.setFormerRectCharacteristics(prevX, y, (x-prevX), (prevY - y));
 				shapeTool.drawRect(prevX, y, (x-prevX), (prevY - y));
 			}
 			//LEFT HALF
 			//Quadrant 3
 			else if (x  < prevX && y > prevY)
 			{
-				shapeTool.setFormerRectCharacteristics(x, prevY, (prevX - x), (y - prevY));
 				shapeTool.drawRect(x, prevY, (prevX - x), (y - prevY));
 			}
 			//Quadrant 2
 			else if (x < prevX && y < prevY)
 			{
-				shapeTool.setFormerRectCharacteristics(x, y, (prevX-x), (prevY - y));
 				shapeTool.drawRect(x, y, (prevX-x), (prevY - y));
 			}
 			
 		}
 		else if (ovalMode)
 		{
-			
+			//RIGHT HALF
+			//Quadrant 4
+			if (x > prevX && y > prevY)
+			{
+				shapeTool.drawOval(prevX, prevY, (x-prevX), (y-prevY));
+			}
+			//Quadrant 1
+			else if (x > prevX && y < prevY)
+			{
+				shapeTool.drawOval(prevX, y, (x-prevX), (prevY - y));
+			}
+			//LEFT HALF
+			//Quadrant 3
+			else if (x  < prevX && y > prevY)
+			{
+				shapeTool.drawOval(x, prevY, (prevX - x), (y - prevY));
+			}
+			//Quadrant 2
+			else if (x < prevX && y < prevY)
+			{
+				shapeTool.drawOval(x, y, (prevX-x), (prevY - y));
+			}
 		}
 		
 		e.consume();
@@ -175,7 +185,13 @@ public class CanvasController implements MouseMotionListener, MouseListener
 	{
 		this.circle = circle;
 	}
-
+	
+	public void toggleEraseMode(boolean on)
+	{
+		shapeTool.toggleEraseMode(on);
+		pen.toggleEraseMode(on);
+	}
+	
 	public void clear()
 	{
 		canvas.draw(new ClearAction(DEFAULT_BACKGROUND_COLOR, canvas.getWidth(), canvas.getHeight()), true);

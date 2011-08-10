@@ -53,6 +53,11 @@ public class CanvasView extends JPanel implements CanvasImageListener
 		overG.setComposite(AlphaComposite.getInstance(AlphaComposite.CLEAR, 0.0f));
 		overG.fillRect(0, 0, width, height);
 	}
+	
+	public void drawOverlayRect(int x, int y, int width, int height)
+	{
+		overG.fillRect(x, y, width, height);
+	}
 
 	@Override
 	public void imageUpdated(BufferedImage img)

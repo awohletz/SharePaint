@@ -2,11 +2,15 @@ package sharePaint.models;
 
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.net.Socket;
 import java.util.ArrayList;
+
+import javax.imageio.ImageIO;
+import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
 
 import sharePaint.actions.CanvasAction;
 import sharePaint.network.ConnectionListener;
@@ -40,6 +44,49 @@ public class Canvas implements ConnectionListener
 	public void removeListener(CanvasImageListener l)
 	{
 		listeners.remove(l);
+	}
+
+	public void saveImage()
+	{
+		//currently, only png images are supported. JPG and gif will be supported in the near future. 
+		
+		JOptionPane.showMessageDialog(null, "In the following dialog, type in the name of the file you'd like to save to, OR choose a file to overwrite." +
+				"\nPlease do NOT include the file extension--images are automatically saved as .png files.");
+		
+		JFileChooser fc = new JFileChooser();
+		fc.showDialog(null, "Save");
+
+		if (fc.getSelectedFile() == null)
+		{
+			return;
+		}
+		String fileName = fc.getSelectedFile().toString();
+		
+		File outputFile = fc.getSelectedFile();
+		
+		if (outputFile.exists())
+		{
+			int choice = JOptionPane.showConfirmDialog(null, "The selected file already exists! Overwrite?", "Warning", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+			if (choice == JOptionPane.NO_OPTION)
+			{
+				return;
+			}
+		}
+		
+		if (!outputFile.getName().contains(".png"))
+		{
+			outputFile = new File(fileName + ".png");
+		}
+
+		try
+		{
+			ImageIO.write(backbuffer, "png", outputFile);
+		}
+		catch (IOException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	public void draw(CanvasAction action, boolean networkSend)

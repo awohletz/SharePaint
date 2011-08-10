@@ -1,5 +1,6 @@
 package sharePaint.views;
 
+import java.awt.Color;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -8,13 +9,13 @@ import java.awt.event.ItemListener;
 
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
-import javax.swing.JColorChooser;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import sharePaint.actions.RectangleAction;
 import sharePaint.controllers.CanvasController;
+import sharePaint.models.Canvas;
+import sharePaint.models.Pen;
 
 public class LeftToolbar extends JPanel
 {
@@ -22,16 +23,20 @@ public class LeftToolbar extends JPanel
 	private JComboBox shapeChooser;
 	private JCheckBox drawRectangle;
 	private JCheckBox drawOval;
+	private JCheckBox fillTool;
 	private CanvasController controller;
+	private Canvas canvas;
+	private JCheckBox eraser;
 
 	/**
 	 * @param cv
 	 */
-	public LeftToolbar(final CanvasController ctrl)
+	public LeftToolbar(final CanvasController ctrl, final Canvas canvas)
 	{
 		this.setLayout(new GridLayout(20, 1));
 		this.setSize(60, 480);
 		controller = ctrl;
+		this.canvas = canvas;
 		
 		Integer[] brushSizes = new Integer[7];
 		brushSizes[0] = 2;
@@ -46,22 +51,47 @@ public class LeftToolbar extends JPanel
 		shapes[0] = "Circle";
 		shapes[1] = "Square";
 
-		JButton clearButton = new JButton("Clear");
-		clearButton.addActionListener(new ActionListener()
+		JLabel tools = new JLabel("Tools");
+		tools.setForeground(Color.BLUE);
+		this.add(tools);
+		
+		fillTool = new JCheckBox("Fill Tool");
+		fillTool.addItemListener(new ItemListener()
 		{
-
 			@Override
-			public void actionPerformed(ActionEvent e)
+			public void itemStateChanged(ItemEvent e)
 			{
-				ctrl.clear();
+				if (e.getStateChange() == ItemEvent.SELECTED)
+				{
+					drawRectangle.setSelected(false);
+					drawOval.setSelected(false);
+					eraser.setSelected(false);
+					
+				}
 			}
 		});
-		this.add(clearButton);
-
-		// BRUSH SIZE CHOOSER
+		this.add(fillTool);
+		
+		eraser = new JCheckBox("Eraser");
+		eraser.addItemListener(new ItemListener()
+		{
+			@Override
+			public void itemStateChanged(ItemEvent e)
+			{
+				if (e.getStateChange() == ItemEvent.SELECTED)
+				{
+					fillTool.setSelected(false);
+					ctrl.toggleEraseMode(true);
+				}
+				else
+				{
+					ctrl.toggleEraseMode(false);
+				}
+			}
+		});
+		this.add(eraser);
 		
 		//BRUSH SIZE CHOOSER
-
 		sizeChooser = new JComboBox(brushSizes);
 		sizeChooser.setSelectedItem(brushSizes[4]); // default value is 10 x 10
 		sizeChooser.addActionListener(new ActionListener()
@@ -76,18 +106,6 @@ public class LeftToolbar extends JPanel
 			}
 		});
 		this.add(sizeChooser);
-
-		JButton changeColors = new JButton("Set Color...");
-		changeColors.addActionListener(new ActionListener()
-		{
-
-			@Override
-			public void actionPerformed(ActionEvent ae)
-			{
-				ColorChooser cc = new ColorChooser(ctrl);
-			}
-		});
-		this.add(changeColors);
 
 		// SHAPE CHOOSER JCOMBOBOX
 		shapeChooser = new JComboBox(shapes);
@@ -104,29 +122,66 @@ public class LeftToolbar extends JPanel
 			}
 		});
 		this.add(shapeChooser);
+		
+		JButton changeColors = new JButton("Set Color...");
+		changeColors.addActionListener(new ActionListener()
+		{
 
-		JLabel tools = new JLabel("Tools");
+			@Override
+			public void actionPerformed(ActionEvent ae)
+			{
+				ColorChooser cc = new ColorChooser(ctrl);
+			}
+		});
+		this.add(changeColors);
+		
+		JButton clearButton = new JButton("Clear");
+		clearButton.addActionListener(new ActionListener()
+		{
 
+			@Override
+			public void actionPerformed(ActionEvent e)
+			{
+				ctrl.clear();
+			}
+		});
+		this.add(clearButton);
+		
+
+		JLabel shapeFunctions = new JLabel("Shape Functions");
+		shapeFunctions.setForeground(Color.BLUE);
+		this.add(shapeFunctions);
+		
+		
+		//SHAPE-DRAW CHECKBOXES********************************************
 		drawRectangle = new JCheckBox("Draw Rectangle");
-
-		RectangleItemListener ril = new RectangleItemListener();
-		OvalItemListener oil = new OvalItemListener();
-
-		drawRectangle = new JCheckBox("Draw Rectangle");
-		drawRectangle.addItemListener(ril);
+		drawRectangle.addItemListener(new RectangleItemListener());
 
 		drawOval = new JCheckBox("Draw Oval");
-		drawOval.addItemListener(oil);
-
-		this.add(tools);
+		drawOval.addItemListener(new OvalItemListener());
+		//*****************************************************************
+		
+		
 		this.add(drawRectangle);
 		this.add(drawOval);
-
-		/*
-		 * addFillerLabel(); addFillerLabel(); addFillerLabel();
-		 * addFillerLabel();
-		 */
-
+		
+		JLabel fileActions = new JLabel("Output Functions");
+		fileActions.setForeground(Color.BLUE);
+		JButton save = new JButton("Save...");
+		save.addActionListener(new ActionListener()
+		{
+			@Override
+			public void actionPerformed(ActionEvent arg0)
+			{
+				canvas.saveImage();
+			}
+		});
+		
+		JButton print = new JButton("Print...");
+		
+		this.add(fileActions);
+		this.add(save);
+		this.add(print);
 	}
 
 	public void addFillerLabel()
@@ -144,6 +199,7 @@ public class LeftToolbar extends JPanel
 			if (e.getStateChange() == ItemEvent.SELECTED)
 			{
 				drawOval.setSelected(false);
+				fillTool.setSelected(false);
 				controller.setDrawType("rect");
 			}
 			else
@@ -162,6 +218,7 @@ public class LeftToolbar extends JPanel
 			if (e.getStateChange() == ItemEvent.SELECTED)
 			{
 				drawRectangle.setSelected(false);
+				fillTool.setSelected(false);
 				controller.setDrawType("oval");
 			}
 			else
